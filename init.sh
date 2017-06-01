@@ -102,7 +102,8 @@ fancy_echo "Installing rbenv"
   git clone https://github.com/rbenv/rbenv.git ~/.rbenv
   cd ~/.rbenv && src/configure && make -C src
   append_to_zshrc 'export PATH="$HOME/.rbenv/bin:$PATH"'
-  rbenv rehash
+  append_to_zshrc 'eval "$(rbenv init -)"'
+  source ~/.zshrc
   type rbenv
 
 fancy_echo "Installing ruby-build"
