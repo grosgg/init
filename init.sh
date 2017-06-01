@@ -101,7 +101,9 @@ fancy_echo "Installing libraries for common gem dependencies ..."
   install_if_needed zlib1g-dev
 
 fancy_echo "Installing rbenv"
-  git clone https://github.com/rbenv/rbenv.git ~/.rbenv
+  if [[ ! -d "$HOME/.rbenv/" ]]; then
+    git clone https://github.com/rbenv/rbenv.git ~/.rbenv
+  fi
   cd ~/.rbenv && src/configure && make -C src
   append_to_zshrc 'export PATH="$HOME/.rbenv/bin:$PATH"'
   append_to_zshrc 'eval "$(rbenv init -)"'
@@ -109,11 +111,14 @@ fancy_echo "Installing rbenv"
   type rbenv
 
 fancy_echo "Installing ruby-build"
-  git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
+  if [[ ! -d "$HOME/.rbenv/plugins/ruby-build/" ]]; then
+    git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
+  fi
   rbenv rehash
 
 fancy_echo "Installing latest ruby version ($ruby_version)"
   rbenv install $ruby_version
+  rbenv local $ruby_version
 
 # DB
 fancy_echo "Installing Postgres"
