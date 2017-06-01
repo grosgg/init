@@ -97,6 +97,8 @@ fancy_echo "Installing libraries for common gem dependencies ..."
   install_if_needed build-essential
   install_if_needed patch
   install_if_needed libreadline-dev
+  install_if_needed libssl-dev
+  install_if_needed zlib1g-dev
 
 fancy_echo "Installing rbenv"
   git clone https://github.com/rbenv/rbenv.git ~/.rbenv
