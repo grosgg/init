@@ -117,7 +117,9 @@ fancy_echo "Installing ruby-build"
   rbenv rehash
 
 fancy_echo "Installing latest ruby version ($ruby_version)"
-  rbenv install -s $ruby_version
+  if [[ ! -d "$HOME/.rbenv/versions/$ruby_version" ]]; then
+    rbenv install $ruby_version
+  fi
   rbenv local $ruby_version
 
 # DB
