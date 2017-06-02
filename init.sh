@@ -92,6 +92,12 @@ fancy_echo "Installing ctags, to index files for vim tab completion of methods, 
 fancy_echo "Installing zsh ..."
   install_if_needed zsh
 
+fancy_echo "Installing oh-my-zsh ..."
+  if [[ ! -d "$HOME/.oh-my-zsh/" ]]; then
+    sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
+    append_to_zshrc 'plugins=(tmux git ruby bundler rails capistrano)'
+  fi
+
 # Ruby
 fancy_echo "Installing libraries for common gem dependencies ..."
   install_if_needed build-essential
