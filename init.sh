@@ -129,6 +129,14 @@ fancy_echo "Installing Postgres"
 fancy_echo "Installing MongoDB"
   install_if_needed mongodb-org
 
+fancy_echo "Creating service for MongoDB"
+  if [[ ! -f /etc/systemd/system/mongodb.service ]]; then
+    sudo wget -O /etc/systemd/system/mongodb.service https://raw.githubusercontent.com/grosgg/init/master/mongodb.service
+    sudo systemctl start mongodb
+    sudo systemctl status mongodb
+    sudo systemctl enable mongodb
+  fi
+
 # Extras
 fancy_echo "Installing node, to render the rails asset pipeline ..."
   install_if_needed nodejs
