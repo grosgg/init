@@ -109,11 +109,11 @@ fancy_echo "Installing libraries for common gem dependencies ..."
 fancy_echo "Installing rbenv"
   if [[ ! -d "$HOME/.rbenv/" ]]; then
     git clone https://github.com/rbenv/rbenv.git ~/.rbenv
+    cd ~/.rbenv && src/configure && make -C src
+    append_to_zshrc 'export PATH="$HOME/.rbenv/bin:$PATH"'
+    append_to_zshrc 'eval "$(rbenv init -)"'
+    source ~/.zshrc
   fi
-  cd ~/.rbenv && src/configure && make -C src
-  append_to_zshrc 'export PATH="$HOME/.rbenv/bin:$PATH"'
-  append_to_zshrc 'eval "$(rbenv init -)"'
-  source ~/.zshrc
   type rbenv
 
 fancy_echo "Installing ruby-build"
