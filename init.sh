@@ -78,9 +78,16 @@ fancy_echo "Installing vim ..."
   install_if_needed python3-dev
   install_if_needed python3-pip
   install_if_needed neovim
+  if [[ ! -d "$HOME/.config/nvim/" ]]; then
+    curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs \
+      https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  fi
 
 fancy_echo "Installing tmux, to save project state and switch between projects ..."
   install_if_needed tmux
+  if [[ ! -d "$HOME/.tmux/" ]]; then
+    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+  fi
 
 fancy_echo "Installing The Silver Searcher (better than ack or grep) to search the contents of files ..."
   install_if_needed silversearcher-ag
