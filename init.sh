@@ -64,15 +64,20 @@ fancy_echo "Add official MongoDB repository"
   sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927
   echo "deb http://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.2 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.2.list
 
+fancy_echo "Add official Neovim repository"
+  sudo add-apt-repository ppa:neovim-ppa/stable
   sudo aptitude update
-
 
 # Tools
 fancy_echo "Installing git, for source control management ..."
   install_if_needed git
 
 fancy_echo "Installing vim ..."
-  install_if_needed vim
+  install_if_needed python-dev
+  install_if_needed python-pip
+  install_if_needed python3-dev
+  install_if_needed python3-pip
+  install_if_needed neovim
 
 fancy_echo "Installing tmux, to save project state and switch between projects ..."
   install_if_needed tmux
@@ -95,7 +100,6 @@ fancy_echo "Installing zsh ..."
 fancy_echo "Installing oh-my-zsh ..."
   if [[ ! -d "$HOME/.oh-my-zsh/" ]]; then
     sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
-    append_to_zshrc 'plugins=(tmux git ruby bundler rails capistrano)'
   fi
 
 # Ruby
