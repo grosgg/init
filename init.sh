@@ -78,8 +78,8 @@ fancy_echo "Installing vim ..."
   install_if_needed python3-dev
   install_if_needed python3-pip
   install_if_needed neovim
-  if [[ ! -d "$HOME/.config/nvim/" ]]; then
-    curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs \
+  if [[ ! -d "$HOME/.local/share/nvim/" ]]; then
+    curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   fi
 
