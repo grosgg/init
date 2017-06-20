@@ -33,7 +33,6 @@ append_to_zshrc() {
 }
 
 #!/usr/bin/env bash
-
 trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
 set -e
 
@@ -61,11 +60,15 @@ fancy_echo "Updating system packages ..."
   fi
 
 fancy_echo "Add official MongoDB repository"
-  sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927
-  echo "deb http://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.2 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.2.list
+  if [[ $(apt-key list | grep -w EA312927) ]]; then
+    sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927
+    echo "deb http://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.2 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.2.list
+  fi
 
 fancy_echo "Add official Neovim repository"
-  sudo add-apt-repository ppa:neovim-ppa/stable
+  if ! grep -q "^deb .*ppa:neovim-ppa/stable" /etc/apt/sources.list /etc/apt/sources.list.d/*; then
+    sudo add-apt-repository ppa:neovim-ppa/stable
+  fi
   sudo aptitude update
 
 # Tools
@@ -162,9 +165,6 @@ fancy_echo "Changing your shell to zsh ..."
   chsh -s $(which zsh)
 
 # Gems
-fancy_echo "Updating to latest Rubygems version ..."
-  gem update --system
-
 fancy_echo "Installing Bundler to install project-specific Ruby gems ..."
   gem install bundler --no-document --pre
 
@@ -173,4 +173,6 @@ fancy_echo "Configuring Bundler for faster, parallel gem installation ..."
   bundle config --global jobs $((number_of_cores - 1))
 
 fancy_echo "Installing Heroku CLI client ..."
-  curl -s https://toolbelt.heroku.com/install-ubuntu.sh | sh
+  if [ $(which heroku | grep -c "not found") -eq 1 ]; then
+    curl -s https://toolbelt.heroku.com/install-ubuntu.sh | sh
+  fi
