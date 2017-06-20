@@ -60,13 +60,13 @@ fancy_echo "Updating system packages ..."
   fi
 
 fancy_echo "Add official MongoDB repository"
-  if [[ $(apt-key list | grep -w EA312927) ]]; then
+  if [ $(apt-key list | grep -cw EA312927) -eq 0 ]; then
     sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927
     echo "deb http://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.2 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.2.list
   fi
 
 fancy_echo "Add official Neovim repository"
-  if ! grep -q "^deb .*ppa:neovim-ppa/stable" /etc/apt/sources.list /etc/apt/sources.list.d/*; then
+  if [[ ! -f "/etc/apt/sources.list.d/neovim-ppa-ubuntu-stable-xenial.list" ]]; then
     sudo add-apt-repository ppa:neovim-ppa/stable
   fi
   sudo aptitude update
