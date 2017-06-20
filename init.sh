@@ -107,11 +107,6 @@ fancy_echo "Installing ctags, to index files for vim tab completion of methods, 
 fancy_echo "Installing zsh ..."
   install_if_needed zsh
 
-fancy_echo "Installing oh-my-zsh ..."
-  if [[ ! -d "$HOME/.oh-my-zsh/" ]]; then
-    sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
-  fi
-
 # Ruby
 fancy_echo "Installing libraries for common gem dependencies ..."
   install_if_needed build-essential
@@ -161,9 +156,6 @@ fancy_echo "Creating service for MongoDB"
 fancy_echo "Installing node, to render the rails asset pipeline ..."
   install_if_needed nodejs
 
-fancy_echo "Changing your shell to zsh ..."
-  chsh -s $(which zsh)
-
 # Gems
 fancy_echo "Installing Bundler to install project-specific Ruby gems ..."
   gem install bundler --no-document --pre
@@ -175,4 +167,9 @@ fancy_echo "Configuring Bundler for faster, parallel gem installation ..."
 fancy_echo "Installing Heroku CLI client ..."
   if [ $(which heroku | grep -c "not found") -eq 1 ]; then
     curl -s https://toolbelt.heroku.com/install-ubuntu.sh | sh
+  fi
+
+fancy_echo "Installing oh-my-zsh ..."
+  if [[ ! -d "$HOME/.oh-my-zsh/" ]]; then
+    sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
   fi
